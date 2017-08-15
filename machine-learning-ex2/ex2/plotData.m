@@ -18,7 +18,7 @@ pos = X(posIndexes, :);
 neg = X(negIndexes, :);
 
 plot(pos(:, 1), pos(:, 2), 'k+', 'LineWidth', 2, 'MarkerSize', 7);
-plot(neg(:, 1), neg(:, 2), 'ko');
+plot(neg(:, 1), neg(:, 2), 'yo');
 
 
 
