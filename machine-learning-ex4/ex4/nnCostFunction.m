@@ -74,7 +74,8 @@ for i = 1:m
   cur_y = zeros(num_labels, 1);
   cur_y(y(i)) = 1;
 
-  z2 = Theta1 * X(i, :)';
+  a1 = X(i, :)';
+  z2 = Theta1 * a1;
   a2 = [1; sigmoid(z2)];
   z3 = Theta2 * a2;
   a3 = sigmoid(z3);
@@ -92,16 +93,16 @@ for i = 1:m
   %backprop
 
   delta_3 = a3 - cur_y;
-  delta_2 = Theta2' * delta_3 .* sigmoidGradient(z2);
-  delta_2 = delta_2(2:end);
+  delta_2 = Theta2' * delta_3;
+  delta_2 = delta_2(2:end) .* sigmoidGradient(z2);
 
   Delta2 = Delta2 + delta_3 * a2';
   Delta1 = Delta1 + delta_2 * a1';
 end
 
-% J = J/m;
-% Theta1_grad = 1/m * Delta1;
-% Theta2_grad = 1/m * Delta2;
+J = J/m;
+Theta1_grad = 1/m * Delta1 + lambda/m * [zeros(hidden_layer_size, 1) Theta1(:, 2:end)];
+Theta2_grad = 1/m * Delta2 + lambda/m * [zeros(num_labels, 1) Theta2(:, 2:end)];
 
 
 
